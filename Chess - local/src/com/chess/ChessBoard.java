@@ -1,5 +1,8 @@
 package com.chess;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import com.chess.piece.*;
 import com.chess.utils.Vector;
 
@@ -7,6 +10,9 @@ public class ChessBoard {
 
 	private Piece[][] board;
 
+	private Color wColor = new Color(253, 252, 220);
+	private Color bColor = new Color(64, 47, 13);
+	
 	public ChessBoard() {
 		board = new Piece[8][8];
 		initBoard();
@@ -60,7 +66,22 @@ public class ChessBoard {
 		board[7][7] = new Tour(new Vector(7, 7), Main.game.getPlayer(1));
 	}
 
-	public void displayBoard() {
+	public void displayBoard(Graphics g){
+		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
+		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
+		
+		boolean b = true;
+		for(int y = 0; y < 8; y++){
+			for(int x = 0; x < 8; x++){
+				g.setColor((b) ? wColor : bColor);
+				g.fillRect(x * sx, y * sy, sx, sy);
+				b = (b) ? false : true;
+			}
+			b = (b) ? false : true;
+		}
+	}
+	
+	public void displayConsoleBoard() {
 		for (int y = 0; y < 8; y++) {
 			System.out.println("=========================================");
 			System.out.print("|");
@@ -78,4 +99,23 @@ public class ChessBoard {
 		System.out.println("=========================================");
 	}
 
+	// 4 output ->
+	// tab[0] -> left top corner
+	// tab[1] -> right top corner
+	// tab[2] -> rigth bottom corner
+	// tab[3] -> left bottom corner
+	public Vector[] getPixCoord(Vector boardLocs) {
+		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
+		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
+		
+		boardLocs.x--;
+		boardLocs.y--;
+		
+		Vector[] pixelsLocs = {new Vector(boardLocs.x * sx, boardLocs.y * sy),
+				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy),
+				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy + sy),
+				new Vector(boardLocs.x * sx, boardLocs.y * sy + sy)};
+		return pixelsLocs;
+	}
+	
 }
