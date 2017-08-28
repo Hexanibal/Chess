@@ -3,6 +3,7 @@ package com.chess;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.chess.gui.Pan;
 import com.chess.piece.*;
 import com.chess.utils.Vector;
 
@@ -66,7 +67,7 @@ public class ChessBoard {
 		board[7][7] = new Tour(new Vector(7, 7), Main.game.getPlayer(1));
 	}
 
-	public void displayBoard(Graphics g){
+	public void displayBoard(Graphics g, Pan pan){
 		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
 		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
 		
@@ -79,6 +80,14 @@ public class ChessBoard {
 			}
 			b = (b) ? false : true;
 		}
+		
+		for(int x = 0; x < 8; x++){
+			for(int y = 0; y < 8; y++){
+				Vector ctl = getPixCoord(new Vector(x, y))[0];
+				g.drawImage(board[x][y].getTexture(), ctl.x, ctl.y, sx, sy, pan);
+			}
+		}
+		
 	}
 	
 	public void displayConsoleBoard() {
@@ -108,10 +117,7 @@ public class ChessBoard {
 		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
 		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
 		
-		boardLocs.x--;
-		boardLocs.y--;
-		
-		Vector[] pixelsLocs = {new Vector(boardLocs.x * sx, boardLocs.y * sy),
+ 		Vector[] pixelsLocs = {new Vector(boardLocs.x * sx, boardLocs.y * sy),
 				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy),
 				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy + sy),
 				new Vector(boardLocs.x * sx, boardLocs.y * sy + sy)};

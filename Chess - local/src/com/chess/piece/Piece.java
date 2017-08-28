@@ -1,6 +1,9 @@
 package com.chess.piece;
 
+import java.awt.Image;
+
 import com.chess.Player;
+import com.chess.gui.textures.Texture;
 import com.chess.utils.Vector;
 
 public abstract class Piece {
@@ -8,15 +11,18 @@ public abstract class Piece {
 	protected PieceType type;
 	protected Vector loc;
 	protected Player player;
+	protected Texture texture;
 	
 	public Piece(Vector loc, Player player, PieceType type) {
 		this.type = type;
 		this.loc = loc;
 		this.player = player;
+		this.texture = Texture.PION;
 	}
 		public Piece(Vector loc, PieceType type) {
 		this.loc = loc;
 		this.type = type;
+		this.texture = Texture.EMPTY;
 	}
 
 	
@@ -28,12 +34,20 @@ public abstract class Piece {
 		return type;
 	}
 	
+	public void setType(PieceType type){
+		this.type = type;
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}
 	
 	public Vector getLocation() {
 		return loc;
+	}
+	
+	public Image getTexture(){
+		return texture.getTexture();
 	}
 	
 }

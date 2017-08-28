@@ -15,7 +15,7 @@ public class Pan extends JPanel{
 	}
 	
 	protected void paintComponent(Graphics g) {
-		Main.game.getBoard().displayBoard(g);
+		Main.game.getBoard().displayBoard(g, this);
 	}
 	
 }

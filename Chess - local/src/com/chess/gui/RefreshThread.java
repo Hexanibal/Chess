@@ -4,7 +4,7 @@ import com.chess.Main;
 
 public class RefreshThread implements Runnable{
 
-	static int framerate = 10;
+	static int framerate = 60;
 	
 	@Override
 	public void run() {
