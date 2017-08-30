@@ -2,6 +2,8 @@ package com.chess.gui;
 
 import javax.swing.JFrame;
 
+import com.chess.gui.interactions.MouseListener;
+
 @SuppressWarnings("serial")
 public class Window extends JFrame{
 
@@ -20,6 +22,7 @@ public class Window extends JFrame{
 		this.setUndecorated(false);
 		this.setContentPane(p);
 		this.pack();
+		this.addMouseListener(new MouseListener());
 	}
 	
 }

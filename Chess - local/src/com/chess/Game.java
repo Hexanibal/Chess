@@ -1,5 +1,7 @@
 package com.chess;
 
+import com.chess.chessBoard.ChessBoard;
+
 public class Game {
 
 	private ChessBoard board;
