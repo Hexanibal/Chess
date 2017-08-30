@@ -4,7 +4,15 @@ import java.awt.Graphics;
 
 import com.chess.Main;
 import com.chess.gui.Pan;
-import com.chess.piece.*;
+import com.chess.piece.Cavalier;
+import com.chess.piece.Empty;
+import com.chess.piece.Fou;
+import com.chess.piece.Piece;
+import com.chess.piece.PieceType;
+import com.chess.piece.Pion;
+import com.chess.piece.Reine;
+import com.chess.piece.Roi;
+import com.chess.piece.Tour;
 import com.chess.utils.Vector;
 
 public class ChessBoard {
@@ -12,9 +20,15 @@ public class ChessBoard {
 	private Piece[][] pieces;
 	private Square[][] board;
 	
+	private int selectState;
+	private Vector savedSelect;
+	
 	public ChessBoard() {
 		pieces = new Piece[8][8];
 		board = new Square[8][8];
+		
+		selectState = 0;
+		savedSelect = new Vector();
 		
 		initBoard();
 		initPieces();
@@ -25,7 +39,7 @@ public class ChessBoard {
 		boolean b = true;
 		for(int y = 0; y < 8; y++){
 			for(int x = 0; x < 8; x++){
-				board[x][y] = new Square(new Vector(x, y), (b) ? SquareColor.LIGHT : SquareColor.DARK);
+				board[x][y] = new Square(new Vector(x, y), (b) ? SquareType.LIGHT : SquareType.DARK);
 				b = (b) ? false : true;
 			}
 			b = (b) ? false : true;
@@ -100,15 +114,23 @@ public class ChessBoard {
 	// tab[1] -> right top corner
 	// tab[2] -> rigth bottom corner
 	// tab[3] -> left bottom corner
-	public Vector[] getPixCoord(Vector boardLocs) {
+	/* GET PX COORDS FROM SQUARE LOC */
+	public Vector[] getPixCoords(Vector squareLoc) {
 		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
 		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
 		
- 		Vector[] pixelsLocs = {new Vector(boardLocs.x * sx, boardLocs.y * sy),
-				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy),
-				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy + sy),
-				new Vector(boardLocs.x * sx, boardLocs.y * sy + sy)};
+ 		Vector[] pixelsLocs = {new Vector(squareLoc.x * sx, squareLoc.y * sy),
+				new Vector(squareLoc.x * sx + sx, squareLoc.y * sy),
+				new Vector(squareLoc.x * sx + sx, squareLoc.y * sy + sy),
+				new Vector(squareLoc.x * sx, squareLoc.y * sy + sy)};
 		return pixelsLocs;
+	}
+	
+	/* GET SQUARE LOC FROM PX INPUT LOC */
+	public Vector getSquareCoord(Vector pxLoc){
+		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
+		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
+		return new Vector((pxLoc.x - pxLoc.x % sx) / sx, (pxLoc.y - pxLoc.y % sy) / sy);
 	}
 	
 	public Vector getBoardLoc(Vector pxLoc){
@@ -117,6 +139,36 @@ public class ChessBoard {
 	
 	public void movePiece(Piece piece) {
 		
+	}
+	
+	public void registerClick(Vector pxLoc){
+		Vector clickedSquare = getSquareCoord(pxLoc);
+		
+		/* ON SELECT PREMIERE CASE */
+		if(selectState == 0) {
+			if(!pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)){
+				board[clickedSquare.x][clickedSquare.y].select(SelectType.FIRST);
+				savedSelect = clickedSquare;
+			}
+		}
+		/* ON SELECT DEUXIEME CASE ET PATH */
+		else if (selectState == 1) {
+			
+		}
+		/* ON DESELECT */
+		else if (selectState == 2) {
+			unSelectBoard();
+		}
+		
+		selectState = (selectState < 2) ? selectState + 1 : 0;
+	}
+	
+	private void unSelectBoard() {
+		for(int x = 0; x < 8; x++){
+			for(int y = 0; y < 8; y++){
+				board[x][y].unSelect();
+			}
+		}
 	}
 	
 }

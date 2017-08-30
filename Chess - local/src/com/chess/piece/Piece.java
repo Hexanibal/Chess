@@ -47,7 +47,7 @@ public abstract class Piece {
 		int sx =  (int) (Main.frame.getContentPane().getSize().getWidth()) / 8;
 		int sy = (int) (Main.frame.getContentPane().getSize().getHeight()) / 8;
 		
-		Vector ctl = Main.game.getBoard().getPixCoord(new Vector(loc.x, loc.y))[0];
+		Vector ctl = Main.game.getBoard().getPixCoords(new Vector(loc.x, loc.y))[0];
 		g.drawImage(getTexture(), ctl.x, ctl.y, sx, sy, pan);
 	}
 	

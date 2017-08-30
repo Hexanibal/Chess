@@ -2,6 +2,7 @@ package com.chess;
 
 import java.io.IOException;
 
+import com.chess.gui.RefreshThread;
 import com.chess.gui.Window;
 import com.chess.gui.textures.TexturesManager;
 
@@ -21,7 +22,8 @@ public class Main {
 		
 		frame = new Window();
 				
-//		game.getBoard().displayConsoleBoard();
+		Thread t = new Thread(new RefreshThread());
+		t.start();
 	}
 
 }

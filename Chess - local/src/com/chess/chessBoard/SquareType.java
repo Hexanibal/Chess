@@ -2,13 +2,14 @@ package com.chess.chessBoard;
 
 import java.awt.Color;
 
-public enum SquareColor {
+public enum SquareType {
 
 	LIGHT(new Color(253, 252, 220)),
 	DARK(new Color(64, 47, 13));
 	
+	
 	Color color;
-	private SquareColor(Color color) {
+	private SquareType(Color color) {
 		this.color = color;
 	}
 	
