@@ -6,9 +6,10 @@ public class Game {
 	private Player[] players;
 	
 	public Game() {
-		players = new Player[2];
+		players = new Player[3];
 		players[0] = new Player(PlayerColor.WHITE);
 		players[1] = new Player(PlayerColor.BLACK);
+		players[2] = new Player(PlayerColor.NULL);
 	}
 	
 	public ChessBoard getBoard(){

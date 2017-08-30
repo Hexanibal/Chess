@@ -1,11 +1,12 @@
 package com.chess.piece;
 
+import com.chess.Player;
 import com.chess.utils.Vector;
 
 public class Empty extends Piece{
 
-	public Empty(Vector loc) {
-		super(loc, PieceType.EMPTY);
+	public Empty(Vector loc, Player player) {
+		super(loc, player, PieceType.EMPTY);
 	}
 
 	@Override

@@ -3,5 +3,6 @@ package com.chess;
 public enum PlayerColor {
 
 	WHITE,
-	BLACK;
+	BLACK,
+	NULL;
 }

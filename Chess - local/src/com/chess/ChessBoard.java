@@ -43,7 +43,7 @@ public class ChessBoard {
 		/* INIT EMPTY ZONE */
 		for (int y = 2; y < 6; y++) {
 			for (int x = 0; x < 8; x++) {
-				board[x][y] = new Empty(new Vector(x, y));
+				board[x][y] = new Empty(new Vector(x, y), Main.game.getPlayer(2));
 			}
 		}
 
@@ -122,6 +122,10 @@ public class ChessBoard {
 				new Vector(boardLocs.x * sx + sx, boardLocs.y * sy + sy),
 				new Vector(boardLocs.x * sx, boardLocs.y * sy + sy)};
 		return pixelsLocs;
+	}
+	
+	public void movePiece(Piece piece) {
+		
 	}
 	
 }
