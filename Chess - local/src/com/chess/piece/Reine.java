@@ -10,15 +10,10 @@ public class Reine extends Piece{
 	}
 
 	@Override
-	public boolean isValablePath(Vector startPoint, Vector endPoint) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void move(Vector startPoint, Vector endPoint) {
+	public void refreshPath() {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }
