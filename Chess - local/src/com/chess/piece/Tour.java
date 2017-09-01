@@ -39,22 +39,6 @@ public class Tour extends Piece {
 				i++;
 			}
 			
-			/* PATH DOWN */
-			i = 1;
-			while(true) {
-				if(loc.y + i > 7) break;
-				
-				if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.NULL)){
-					path.add(new Vector(loc.x, loc.y + i));
-				} else if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.WHITE)){
-					break;
-				} else if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.BLACK)){
-					path.add(new Vector(loc.x, loc.y + i));
-					break;
-				}
-				i++;
-			}
-			
 			/* PATH RIGHT */
 			i = 1;
 			while(true) {
@@ -66,6 +50,22 @@ public class Tour extends Piece {
 					break;
 				} else if(board.getPiece(new Vector(loc.x + i, loc.y)).getPlayer().getColor().equals(PlayerColor.BLACK)){
 					path.add(new Vector(loc.x + i, loc.y));
+					break;
+				}
+				i++;
+			}
+			
+			/* PATH DOWN */
+			i = 1;
+			while(true) {
+				if(loc.y + i > 7) break;
+				
+				if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.NULL)){
+					path.add(new Vector(loc.x, loc.y + i));
+				} else if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.WHITE)){
+					break;
+				} else if(board.getPiece(new Vector(loc.x, loc.y + i)).getPlayer().getColor().equals(PlayerColor.BLACK)){
+					path.add(new Vector(loc.x, loc.y + i));
 					break;
 				}
 				i++;
@@ -108,22 +108,6 @@ public class Tour extends Piece {
 				i++;
 			}
 			
-			/* PATH DOWN */
-			i = 1;
-			while(true) {
-				if(loc.y - i < 0) break;
-				
-				if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.NULL)){
-					path.add(new Vector(loc.x, loc.y - i));
-				} else if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.BLACK)){
-					break;
-				} else if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.WHITE)){
-					path.add(new Vector(loc.x, loc.y - i));
-					break;
-				}
-				i++;
-			}
-			
 			/* PATH RIGHT */
 			i = 1;
 			while(true) {
@@ -135,6 +119,22 @@ public class Tour extends Piece {
 					break;
 				} else if(board.getPiece(new Vector(loc.x - i, loc.y)).getPlayer().getColor().equals(PlayerColor.WHITE)){
 					path.add(new Vector(loc.x - i, loc.y));
+					break;
+				}
+				i++;
+			}
+			
+			/* PATH DOWN */
+			i = 1;
+			while(true) {
+				if(loc.y - i < 0) break;
+				
+				if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.NULL)){
+					path.add(new Vector(loc.x, loc.y - i));
+				} else if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.BLACK)){
+					break;
+				} else if(board.getPiece(new Vector(loc.x, loc.y - i)).getPlayer().getColor().equals(PlayerColor.WHITE)){
+					path.add(new Vector(loc.x, loc.y - i));
 					break;
 				}
 				i++;
