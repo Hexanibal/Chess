@@ -13,11 +13,6 @@ public class Tour extends Piece {
 		super(loc, player, PieceType.TOUR);
 	}
 
-//	 if(!board.getPiece(new Vector(loc.x - 1, loc.y +
-//	 2)).getPlayer().getColor().equals(PlayerColor.BLACK)){
-//	 path.add(new Vector(loc.x - 1, loc.y + 2));
-//	 }
-
 	@Override
 	public void refreshPath() {
 		ArrayList<Vector> path = new ArrayList<>();
@@ -64,6 +59,7 @@ public class Tour extends Piece {
 			i = 1;
 			while(true) {
 				if(loc.x + i > 7) break;
+				
 				if(board.getPiece(new Vector(loc.x + i, loc.y)).getPlayer().getColor().equals(PlayerColor.NULL)){
 					path.add(new Vector(loc.x + i, loc.y));
 				} else if(board.getPiece(new Vector(loc.x + i, loc.y)).getPlayer().getColor().equals(PlayerColor.WHITE)){
@@ -79,6 +75,7 @@ public class Tour extends Piece {
 			i = 1;
 			while(true) {
 				if(loc.x - i < 0) break;
+				
 				if(board.getPiece(new Vector(loc.x - i, loc.y)).getPlayer().getColor().equals(PlayerColor.NULL)){
 					path.add(new Vector(loc.x - i, loc.y));
 				} else if(board.getPiece(new Vector(loc.x - i, loc.y)).getPlayer().getColor().equals(PlayerColor.WHITE)){
@@ -131,6 +128,7 @@ public class Tour extends Piece {
 			i = 1;
 			while(true) {
 				if(loc.x - i < 0) break;
+				
 				if(board.getPiece(new Vector(loc.x - i, loc.y)).getPlayer().getColor().equals(PlayerColor.NULL)){
 					path.add(new Vector(loc.x - i, loc.y));
 				} else if(board.getPiece(new Vector(loc.x - i, loc.y)).getPlayer().getColor().equals(PlayerColor.BLACK)){
@@ -146,6 +144,7 @@ public class Tour extends Piece {
 			i = 1;
 			while(true) {
 				if(loc.x + i > 7) break;
+				
 				if(board.getPiece(new Vector(loc.x + i, loc.y)).getPlayer().getColor().equals(PlayerColor.NULL)){
 					path.add(new Vector(loc.x + i, loc.y));
 				} else if(board.getPiece(new Vector(loc.x + i, loc.y)).getPlayer().getColor().equals(PlayerColor.BLACK)){
