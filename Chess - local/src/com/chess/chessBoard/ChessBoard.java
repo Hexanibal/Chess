@@ -1,7 +1,6 @@
 package com.chess.chessBoard;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 import com.chess.Main;
 import com.chess.gui.Pan;
@@ -53,8 +52,8 @@ public class ChessBoard {
 		pieces[0][0] = new Tour(new Vector(0, 0), Main.game.getPlayer(1));
 		pieces[1][0] = new Cavalier(new Vector(1, 0), Main.game.getPlayer(1));
 		pieces[2][0] = new Fou(new Vector(2, 0), Main.game.getPlayer(1));
-		pieces[3][0] = new Reine(new Vector(4, 0), Main.game.getPlayer(1));
-		pieces[4][0] = new Roi(new Vector(3, 0), Main.game.getPlayer(1));
+		pieces[3][0] = new Reine(new Vector(3, 0), Main.game.getPlayer(1));
+		pieces[4][0] = new Roi(new Vector(4, 0), Main.game.getPlayer(1));
 		pieces[5][0] = new Fou(new Vector(5, 0), Main.game.getPlayer(1));
 		pieces[6][0] = new Cavalier(new Vector(6, 0), Main.game.getPlayer(1));
 		pieces[7][0] = new Tour(new Vector(7, 0), Main.game.getPlayer(1));
@@ -88,8 +87,8 @@ public class ChessBoard {
 		pieces[0][7] = new Tour(new Vector(0, 7), Main.game.getPlayer(0));
 		pieces[1][7] = new Cavalier(new Vector(1, 7), Main.game.getPlayer(0));
 		pieces[2][7] = new Fou(new Vector(2, 7), Main.game.getPlayer(0));
-		pieces[3][7] = new Reine(new Vector(4, 7), Main.game.getPlayer(0));
-		pieces[4][7] = new Roi(new Vector(3, 7), Main.game.getPlayer(0));
+		pieces[3][7] = new Reine(new Vector(3, 7), Main.game.getPlayer(0));
+		pieces[4][7] = new Roi(new Vector(4, 7), Main.game.getPlayer(0));
 		pieces[5][7] = new Fou(new Vector(5, 7), Main.game.getPlayer(0));
 		pieces[6][7] = new Cavalier(new Vector(6, 7), Main.game.getPlayer(0));
 		pieces[7][7] = new Tour(new Vector(7, 7), Main.game.getPlayer(0));
