@@ -13,6 +13,7 @@ public class RefreshThread implements Runnable{
 
 		for(;;){
 			Main.frame.repaint();
+			Main.game.getBoard().displayConsoleBoard();
 			try {
 				Thread.sleep(i);
 			} catch (InterruptedException e) {

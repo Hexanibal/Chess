@@ -101,6 +101,20 @@ public class ChessBoard {
 			}
 		}
 	}
+	
+	public void displayConsoleBoard() {
+		System.out.println("\n\n\n\n\n");
+
+		for (int y = 0; y < 8; y++) {
+			System.out.println("=========================================");
+			System.out.print("|");
+			for (int x = 0; x < 8; x++) {
+				System.out.print(" " + pieces[x][y].getType().getTag() + " |");
+			}
+			System.out.println("");
+		}
+		System.out.println("=========================================");
+	}
 
 	public void displayPieces(Graphics g, Pan pan) {
 		for (int x = 0; x < 8; x++) {
@@ -188,7 +202,7 @@ public class ChessBoard {
 	public Piece getPiece(Vector loc) {
 		return pieces[loc.x][loc.y];
 	}
-
+	
 }
 
 // public void displayConsoleBoard() {
