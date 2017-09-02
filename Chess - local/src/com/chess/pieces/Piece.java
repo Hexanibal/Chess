@@ -1,4 +1,4 @@
-package com.chess.piece;
+package com.chess.pieces;
 
 import java.awt.Graphics;
 import java.awt.Image;

@@ -3,16 +3,17 @@ package com.chess.chessBoard;
 import java.awt.Graphics;
 
 import com.chess.Main;
+import com.chess.PlayerColor;
 import com.chess.gui.Pan;
-import com.chess.piece.Cavalier;
-import com.chess.piece.Empty;
-import com.chess.piece.Fou;
-import com.chess.piece.Piece;
-import com.chess.piece.PieceType;
-import com.chess.piece.Pion;
-import com.chess.piece.Reine;
-import com.chess.piece.Roi;
-import com.chess.piece.Tour;
+import com.chess.pieces.Cavalier;
+import com.chess.pieces.Empty;
+import com.chess.pieces.Fou;
+import com.chess.pieces.Piece;
+import com.chess.pieces.PieceType;
+import com.chess.pieces.Pion;
+import com.chess.pieces.Reine;
+import com.chess.pieces.Roi;
+import com.chess.pieces.Tour;
 import com.chess.utils.Vector;
 
 public class ChessBoard {
@@ -101,7 +102,7 @@ public class ChessBoard {
 			}
 		}
 	}
-	
+
 	public void displayConsoleBoard() {
 		System.out.println("\n\n\n\n\n");
 
@@ -157,12 +158,21 @@ public class ChessBoard {
 		pieces[targetLoc.x][targetLoc.y] = piece;
 		piece.setLocation(targetLoc);
 		pieces[lastLoc.x][lastLoc.y] = new Empty(lastLoc, Main.game.getPlayer(2));
+		Main.game.passTour();
 	}
 
 	public void registerClick(Vector pxLoc) {
 		Vector clickedSquare = getSquareCoord(pxLoc);
+		
+		/* VERIFICATION TOUR */
+		if (selectState == 0
+				&& !pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(Main.game.getTour())
+				&& !pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(PlayerColor.NULL)) {
+			System.out.println("pas ton tour fdp");
+			return;
+		}
 
-		/* ON SELECT PREMIERE CASE ET PATH*/
+		/* ON SELECT PREMIERE CASE ET PATH */
 		if (selectState == 0) {
 			if (!pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)) {
 				showPath(pieces[clickedSquare.x][clickedSquare.y]);
@@ -170,23 +180,57 @@ public class ChessBoard {
 				selectState = 1;
 			}
 		}
-		/* ON MOVE SUR CLICKED SQUARE*/
+		
+		/* ON MOVE SUR CLICKED SQUARE OU ON RESELECT */
 		else if (selectState == 1) {
 			Piece p = getPiece(savedPieceLoc);
+
 			if (p.isValablePath(clickedSquare)) {
 				movePiece(p, clickedSquare);
-			} else {
-				System.out.println("invalide path");
+				selectState = 0;
+				unSelectBoard();
+				return;
+			} else if(pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)){
+				
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						board[clickedSquare.x][clickedSquare.y].select(SelectType.INVALIDE);
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) { }
+						board[clickedSquare.x][clickedSquare.y].unSelect();
+					}
+				}).start();
+				
 			}
 			unSelectBoard();
-			selectState = 0;
+			
+			if(pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(Main.game.getTour())){
+				if (!pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)) {
+					showPath(pieces[clickedSquare.x][clickedSquare.y]);
+					savedPieceLoc = clickedSquare;
+					selectState = 1;
+				}
+			} else {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						board[clickedSquare.x][clickedSquare.y].select(SelectType.INVALIDE);
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) { }
+						board[clickedSquare.x][clickedSquare.y].unSelect();
+					}
+				}).start();
+			}
 		}
 	}
-	
+
 	private void showPath(Piece piece) {
 		board[piece.getLocation().x][piece.getLocation().y].select(SelectType.FIRST);
 		piece.refreshPath();
-		for(Vector v : piece.getPath()){
+		for (Vector v : piece.getPath()) {
 			board[v.x][v.y].select(SelectType.PATH);
 		}
 	}
@@ -202,68 +246,5 @@ public class ChessBoard {
 	public Piece getPiece(Vector loc) {
 		return pieces[loc.x][loc.y];
 	}
-	
+
 }
-
-// public void displayConsoleBoard() {
-// for (int y = 0; y < 8; y++) {
-// System.out.println("=========================================");
-// System.out.print("|");
-// for (int x = 0; x < 8; x++) {
-// System.out.print(" " + pieces[x][y].getType().getTag() + " |");
-//// System.out.print(" " + x + " " + y + " |");
-// try {
-// Thread.sleep(100);
-// } catch (InterruptedException e) {
-// e.printStackTrace();
-// }
-// }
-// System.out.println("");
-// }
-// System.out.println("=========================================");
-// }
-
-/// * INIT PLAYER 1 */
-// pieces[0][0] = new Tour(new Vector(0, 0), Main.game.getPlayer(0));
-// pieces[1][0] = new Cavalier(new Vector(1, 0), Main.game.getPlayer(0));
-// pieces[2][0] = new Fou(new Vector(2, 0), Main.game.getPlayer(0));
-// pieces[3][0] = new Roi(new Vector(3, 0), Main.game.getPlayer(0));
-// pieces[4][0] = new Reine(new Vector(4, 0), Main.game.getPlayer(0));
-// pieces[5][0] = new Fou(new Vector(5, 0), Main.game.getPlayer(0));
-// pieces[6][0] = new Cavalier(new Vector(6, 0), Main.game.getPlayer(0));
-// pieces[7][0] = new Tour(new Vector(7, 0), Main.game.getPlayer(0));
-//
-// pieces[0][1] = new Pion(new Vector(0, 1), Main.game.getPlayer(0));
-// pieces[1][1] = new Pion(new Vector(1, 1), Main.game.getPlayer(0));
-// pieces[2][1] = new Pion(new Vector(2, 1), Main.game.getPlayer(0));
-// pieces[3][1] = new Pion(new Vector(3, 1), Main.game.getPlayer(0));
-// pieces[4][1] = new Pion(new Vector(4, 1), Main.game.getPlayer(0));
-// pieces[5][1] = new Pion(new Vector(5, 1), Main.game.getPlayer(0));
-// pieces[6][1] = new Pion(new Vector(6, 1), Main.game.getPlayer(0));
-// pieces[7][1] = new Pion(new Vector(7, 1), Main.game.getPlayer(0));
-//
-/// * INIT EMPTY ZONE */
-// for (int y = 2; y < 6; y++) {
-// for (int x = 0; x < 8; x++) {
-// pieces[x][y] = new Empty(new Vector(x, y), Main.game.getPlayer(2));
-// }
-// }
-//
-/// * INIT PLAYER 2 */
-// pieces[0][6] = new Pion(new Vector(0, 6), Main.game.getPlayer(1));
-// pieces[1][6] = new Pion(new Vector(1, 6), Main.game.getPlayer(1));
-// pieces[2][6] = new Pion(new Vector(2, 6), Main.game.getPlayer(1));
-// pieces[3][6] = new Pion(new Vector(3, 6), Main.game.getPlayer(1));
-// pieces[4][6] = new Pion(new Vector(4, 6), Main.game.getPlayer(1));
-// pieces[5][6] = new Pion(new Vector(5, 6), Main.game.getPlayer(1));
-// pieces[6][6] = new Pion(new Vector(6, 6), Main.game.getPlayer(1));
-// pieces[7][6] = new Pion(new Vector(7, 6), Main.game.getPlayer(1));
-//
-// pieces[0][7] = new Tour(new Vector(0, 7), Main.game.getPlayer(1));
-// pieces[1][7] = new Cavalier(new Vector(1, 7), Main.game.getPlayer(1));
-// pieces[2][7] = new Fou(new Vector(2, 7), Main.game.getPlayer(1));
-// pieces[3][7] = new Roi(new Vector(3, 7), Main.game.getPlayer(1));
-// pieces[4][7] = new Reine(new Vector(4, 7), Main.game.getPlayer(1));
-// pieces[5][7] = new Fou(new Vector(5, 7), Main.game.getPlayer(1));
-// pieces[6][7] = new Cavalier(new Vector(6, 7), Main.game.getPlayer(1));
-// pieces[7][7] = new Tour(new Vector(7, 7), Main.game.getPlayer(1));
