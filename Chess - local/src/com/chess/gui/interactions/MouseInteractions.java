@@ -1,25 +1,26 @@
 package com.chess.gui.interactions;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import com.chess.Main;
 import com.chess.utils.Vector;
 
-public class MouseListener implements java.awt.event.MouseListener{
+public class MouseInteractions implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-	
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class MouseListener implements java.awt.event.MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 }

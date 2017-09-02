@@ -162,69 +162,74 @@ public class ChessBoard {
 	}
 
 	public void registerClick(Vector pxLoc) {
-		Vector clickedSquare = getSquareCoord(pxLoc);
-		
+		Vector clickedLoc = getSquareCoord(pxLoc);
+		Piece piece = getPiece(clickedLoc);
+
 		/* VERIFICATION TOUR */
-		if (selectState == 0
-				&& !pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(Main.game.getTour())
-				&& !pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(PlayerColor.NULL)) {
-			System.out.println("pas ton tour fdp");
+		if (selectState == 0 && !piece.getPlayer().getColor().equals(Main.game.getTour())
+				&& !piece.getPlayer().getColor().equals(PlayerColor.NULL)) {
+			showMissClick(getSquare(clickedLoc));
 			return;
 		}
 
 		/* ON SELECT PREMIERE CASE ET PATH */
 		if (selectState == 0) {
-			if (!pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)) {
-				showPath(pieces[clickedSquare.x][clickedSquare.y]);
-				savedPieceLoc = clickedSquare;
+			if (piece.getPlayer().getColor().equals(Main.game.getTour())) {
+				showPath(getPiece(clickedLoc));
+				savedPieceLoc = clickedLoc;
 				selectState = 1;
+			} else {
+				showMissClick(getSquare(clickedLoc));
 			}
 		}
-		
+
 		/* ON MOVE SUR CLICKED SQUARE OU ON RESELECT */
 		else if (selectState == 1) {
-			Piece p = getPiece(savedPieceLoc);
+			Piece savedPiece = getPiece(savedPieceLoc);
 
-			if (p.isValablePath(clickedSquare)) {
-				movePiece(p, clickedSquare);
+			if (savedPiece.canGoTo(clickedLoc)) {
+				movePiece(savedPiece, clickedLoc);
 				selectState = 0;
 				unSelectBoard();
 				return;
-			} else if(pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)){
-				
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						board[clickedSquare.x][clickedSquare.y].select(SelectType.INVALIDE);
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) { }
-						board[clickedSquare.x][clickedSquare.y].unSelect();
-					}
-				}).start();
-				
+			} else if (piece.getType().equals(PieceType.EMPTY)) {
+				showMissClick(getSquare(clickedLoc));
+				unSelectBoard();
+				selectState = 0;
+				return;
 			}
+
+			if (piece == savedPiece) {
+				unSelectBoard();
+				selectState = 0;
+				return;
+			}
+
 			unSelectBoard();
-			
-			if(pieces[clickedSquare.x][clickedSquare.y].getPlayer().getColor().equals(Main.game.getTour())){
-				if (!pieces[clickedSquare.x][clickedSquare.y].getType().equals(PieceType.EMPTY)) {
-					showPath(pieces[clickedSquare.x][clickedSquare.y]);
-					savedPieceLoc = clickedSquare;
-					selectState = 1;
-				}
+
+			if (piece.getPlayer().getColor().equals(Main.game.getTour())) {
+				showPath(piece);
+				savedPieceLoc = clickedLoc;
+				selectState = 1;
 			} else {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						board[clickedSquare.x][clickedSquare.y].select(SelectType.INVALIDE);
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) { }
-						board[clickedSquare.x][clickedSquare.y].unSelect();
-					}
-				}).start();
+				showMissClick(getSquare(clickedLoc));
+				selectState = 0;
 			}
 		}
+	}
+
+	private void showMissClick(Square square) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				square.select(SelectType.INVALIDE);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+				}
+				square.unSelect();
+			}
+		}).start();
 	}
 
 	private void showPath(Piece piece) {
@@ -245,6 +250,10 @@ public class ChessBoard {
 
 	public Piece getPiece(Vector loc) {
 		return pieces[loc.x][loc.y];
+	}
+
+	public Square getSquare(Vector loc) {
+		return board[loc.x][loc.y];
 	}
 
 }

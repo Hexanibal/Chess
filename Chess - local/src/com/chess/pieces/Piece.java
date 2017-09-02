@@ -28,7 +28,7 @@ public abstract class Piece {
 		path = new ArrayList<>();
 	}
 	
-	public boolean isValablePath(Vector targetLoc){
+	public boolean canGoTo(Vector targetLoc){
 		for(Vector v : path){
 			if(v.x == targetLoc.x && v.y == targetLoc.y) return true;
 		}
@@ -58,6 +58,7 @@ public abstract class Piece {
 	}
 	
 	public ArrayList<Vector> getPath(){
+		refreshPath();
 		return path;
 	}
 	

@@ -116,6 +116,27 @@ public class Roi extends Piece {
 			}
 		}
 
+		Piece p;
+		ArrayList<Vector> pa;
+		for(int x = 0; x < 8; x++) {
+			for(int y = 0; y < 8; y++) {
+				p = board.getPiece(new Vector(x, y));
+				
+				if(!p.getPlayer().getColor().equals(getPlayer().getColor()) && !p.getPlayer().getColor().equals(PlayerColor.NULL)){
+					/*BOUCLE RPOIS*/
+					pa = p.getPath();
+					System.out.println("get pa");
+//					for(Vector v : pa){
+//						if(path.contains(v)){
+//							path.remove(v);
+//							System.out.println("removing " + v.x + " " + v.y);
+//						}
+//					}
+				}
+				
+			}
+		}
+		System.out.println("stop");
 		this.path = path;
 	}
 }
