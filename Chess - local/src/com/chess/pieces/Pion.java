@@ -13,7 +13,6 @@ public class Pion extends Piece{
 		super(loc, player, PieceType.PION);
 	}
 
-	/* RETURN ALL PSOSSIBLE LOCATION */
 	@Override
 	public void refreshPath() {
 		ArrayList<Vector> path = new ArrayList<>();
@@ -35,8 +34,10 @@ public class Pion extends Piece{
 					}
 				}
 				if(loc.y == 6){
-					if(board.getPiece(new Vector(loc.x, loc.y - 2)).getType().equals(PieceType.EMPTY)){
-						path.add(new Vector(loc.x, loc.y - 2));
+					if(board.getPiece(new Vector(loc.x, loc.y - 1)).getType().equals(PieceType.EMPTY)) {
+						if(board.getPiece(new Vector(loc.x, loc.y - 2)).getType().equals(PieceType.EMPTY)){
+							path.add(new Vector(loc.x, loc.y - 2));
+						}
 					}
 				}
 			}
@@ -58,8 +59,10 @@ public class Pion extends Piece{
 					}
 				}
 				if(loc.y == 1){
-					if(board.getPiece(new Vector(loc.x, loc.y + 2)).getType().equals(PieceType.EMPTY)){
-						path.add(new Vector(loc.x, loc.y + 2));
+					if(board.getPiece(new Vector(loc.x, loc.y + 1)).getType().equals(PieceType.EMPTY)) {
+						if(board.getPiece(new Vector(loc.x, loc.y + 2)).getType().equals(PieceType.EMPTY)){
+							path.add(new Vector(loc.x, loc.y + 2));
+						}
 					}
 				}
 			}

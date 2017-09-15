@@ -47,11 +47,11 @@ public class TexturesManager {
 		fou_w = ImageIO.read(getClass().getResourceAsStream("/res/img/fou-w.png"));
 		fou_b = ImageIO.read(getClass().getResourceAsStream("/res/img/fou-b.png"));
 		
-		reine_w = ImageIO.read(getClass().getResourceAsStream("/res/img/roi-w.png"));
-		reine_b = ImageIO.read(getClass().getResourceAsStream("/res/img/roi-b.png"));
+		reine_w = ImageIO.read(getClass().getResourceAsStream("/res/img/reine-w.png"));
+		reine_b = ImageIO.read(getClass().getResourceAsStream("/res/img/reine-b.png"));
 		
-		roi_w = ImageIO.read(getClass().getResourceAsStream("/res/img/reine-w.png"));
-		roi_b = ImageIO.read(getClass().getResourceAsStream("/res/img/reine-b.png"));
+		roi_w = ImageIO.read(getClass().getResourceAsStream("/res/img/roi-w.png"));
+		roi_b = ImageIO.read(getClass().getResourceAsStream("/res/img/roi-b.png"));
 		
 		map.put(0, empty);
 		map.put(1, pion_w);
