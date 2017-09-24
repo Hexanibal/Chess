@@ -1,6 +1,5 @@
 package com.chess.pieces;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import com.chess.Main;
